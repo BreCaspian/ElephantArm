@@ -1,84 +1,83 @@
-# myCobot320Pi Pick Teaching Project
+# myCobot320Pi 抓取示教工程
 
-This project is a terminal-based teaching tool for repetitive pick-and-place.
+这是一个基于终端的示教工具，用于重复执行抓取/搬运动作。
 
-It supports:
-- hand-guided trajectory recording
-- gripper open/close events
-- fixed start/end pose
-- loop replay
-- save/load JSON task file
+支持能力：
+- 手拖机械臂录制轨迹
+- 记录夹爪开/闭事件
+- 固定每个循环的起点和终点
+- 循环回放动作
+- 任务 JSON 保存/加载
 
-## 1. Copy To Raspberry Pi
+## 1. 拷贝到树莓派
 
-Copy folder:
+将目录：
 
 `projects/320pi_pick_teacher`
 
-to your Raspberry Pi (any path).
+拷贝到树莓派任意路径。
 
-## 2. Environment
+## 2. 环境依赖
 
-Install dependencies on Raspberry Pi:
+在树莓派安装依赖：
 
 ```bash
 pip3 install pymycobot pyserial
 ```
 
-## 3. Run
+## 3. 启动方式
 
 ```bash
 python3 pick_teach_loop.py --port /dev/ttyAMA0 --baud 115200 --task pick_task_320pi.json
 ```
 
-If `--port` is omitted, it will ask you to select from detected serial ports.
+如果不传 `--port`，程序会自动列出串口并让你选择。
 
-## 4. Recommended Teaching Workflow
+## 4. 推荐示教流程
 
-1. Run script
-2. `m` power on
-3. `f` release all servos
-4. Drag arm to cycle start pose, then press `1` (capture fixed START)
-5. Press `r` to start recording
-6. Hand-guide arm through pick trajectory
-7. During teaching:
-   - `k` to insert `gripper close`
-   - `o` to insert `gripper open`
-   - `w` to insert wait event
-8. Press `c` to stop recording
-9. Move arm to cycle end pose and press `2` (capture fixed END)
-10. `s` save task
-11. `t` run once
-12. `y` run loop
-13. `e` stop loop
+1. 启动脚本
+2. 按 `m`：机械臂上电
+3. 按 `f`：释放关节（可手动拖动）
+4. 把机械臂拖到循环起点，按 `1`（记录固定起点 START）
+5. 按 `r` 开始录制轨迹
+6. 手动拖动机械臂完成抓取路径
+7. 录制过程中可插入事件：
+   - `k`：插入夹爪闭合事件
+   - `o`：插入夹爪打开事件
+   - `w`：插入等待事件
+8. 按 `c` 结束录制
+9. 把机械臂移动到循环终点，按 `2`（记录固定终点 END）
+10. 按 `s` 保存任务
+11. 按 `t` 单次执行验证
+12. 按 `y` 开始循环执行
+13. 按 `e` 停止循环
 
-## 5. Command List
+## 5. 指令说明
 
-- `h`: show help
-- `p`: print current pose
-- `z`: move to zero pose
-- `f`: release servos
-- `m`: power on servos
-- `1`: capture fixed START
-- `2`: capture fixed END
-- `r`: start recording
-- `c`: stop recording
-- `o`: add gripper open event
-- `k`: add gripper close event
-- `w`: add wait event
-- `x`: clear recorded items
-- `s`: save task
-- `l`: load task
-- `t`: run once
-- `y`: run loop
-- `e`: stop loop
-- `q`: quit
+- `h`：显示帮助
+- `p`：打印当前角度/编码器
+- `z`：回零位 `[0,0,0,0,0,0]`
+- `f`：释放所有关节
+- `m`：所有关节上电
+- `1`：记录固定起点 START
+- `2`：记录固定终点 END
+- `r`：开始录制轨迹
+- `c`：停止录制
+- `o`：添加夹爪打开事件
+- `k`：添加夹爪闭合事件
+- `w`：添加等待事件
+- `x`：清空当前录制内容
+- `s`：保存任务文件
+- `l`：加载任务文件
+- `t`：单次执行
+- `y`：循环执行
+- `e`：停止循环
+- `q`：退出程序
 
-## 6. Notes
+## 6. 注意事项
 
-- Keep speed conservative first (40~60).
-- Ensure no collision before loop run.
-- If your gripper API differs by firmware/package version, the script tries:
+- 首次联调建议低速运行（例如 40~60）。
+- 启动循环前确认整条轨迹无碰撞风险。
+- 不同固件/库版本的夹爪接口可能略有差异，脚本会按以下顺序尝试：
   - `set_gripper_state(...)`
-  - fallback `set_gripper_value(...)`
-
+  - 失败后回退 `set_gripper_value(...)`
