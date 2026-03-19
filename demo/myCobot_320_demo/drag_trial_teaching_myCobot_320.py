@@ -1,13 +1,17 @@
 import time
 import os
 import sys
+from pathlib import Path
 import termios
 import tty
 import threading
 import json
 import serial
 import serial.tools.list_ports
-sys.path.append(os.getcwd())
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from pymycobot.mycobot320 import MyCobot320
 

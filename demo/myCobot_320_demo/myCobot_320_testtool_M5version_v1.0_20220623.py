@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 import os
 import sys
-sys.path.append(os.getcwd())
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 import tkinter
 from tkinter import ttk
 import time
