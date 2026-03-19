@@ -23,3 +23,7 @@ Thumbs.db
 
 # Local runtime artifacts
 projects/320pi_pick_teacher/pick_task_320pi.json
+
+# Local large docs
+docs/2966712005myCobot_320_Pi_book_CN.pdf
+docs/myCobot-en.pdf
