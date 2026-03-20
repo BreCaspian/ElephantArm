@@ -1,6 +1,15 @@
+
 # ElephantArm
 
+
+
 本仓库包含 `pymycobot` 本地源码、官方 demo，以及一个基于 `myCobot 320 Pi` 的固定点抓放项目。
+
+<p align="center">
+  <img src="docs/mycobot320pi.jpg" width="350" alt="myCobot320Pi">
+</p>
+
+
 
 ## 目录结构
 
